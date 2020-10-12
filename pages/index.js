@@ -1,5 +1,20 @@
 import Head from 'next/head'
+import Link from 'next/link'
+var firebase = require('firebase');
+var firebaseui = require('firebaseui');
+var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
+
+
+  ui.start('#firebaseui-auth-container', {
+    signInOptions: [
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID
+    ],
+    // Other config options...
+  });
+  
+  
 export default function Home() {
   return (
     <div className="container">
@@ -10,7 +25,7 @@ export default function Home() {
 
       <main>
         <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Read <Link href="/posts/first-post"><a>this payge</a></Link>
         </h1>
 
         <p className="description">
