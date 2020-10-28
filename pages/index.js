@@ -1,44 +1,52 @@
 import Head from 'next/head'
 import Link from 'next/link'
-var firebase = require('firebase');
-var firebaseui = require('firebaseui');
-var ui = new firebaseui.auth.AuthUI(firebase.auth());
+// var firebase = require('firebase');
+// var firebaseui = require('firebaseui');
+// var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
 
 
-  ui.start('#firebaseui-auth-container', {
-    signInOptions: [
-      firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID
-    ],
-    // Other config options...
-  });
+//   ui.start('#firebaseui-auth-container', {
+//     signInOptions: [
+//       firebase.auth.EmailAuthProvider.PROVIDER_ID,
+//       firebase.auth.GoogleAuthProvider.PROVIDER_ID
+//     ],
+//     // Other config options...
+//   });
   
   
 export default function Home() {
   return (
     <div className="container">
       <Head>
-        <title>Create Next App</title>
+        <title>Abacus</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
+          
         <h1 className="title">
-          Read <Link href="/posts/first-post"><a>this payge</a></Link>
+        <div><img src="/abacus.png" alt = "abacus logo" className = "logo"/></div>
+          abacus grades
         </h1>
 
         <p className="description">
-          Get started by editing <code>pages/index.js</code>
+          No more spreadsheets. No more guessing.
         </p>
+        <Link href="/login" >
+        <div className="card">
+            <h4>Log In</h4>
+          </div>
+        </Link>
 
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+        <Link href="/signup">
+          <div className="card">
+            <h4>Sign Up</h4>
+          </div>
+          </Link>
 
-          <a href="https://nextjs.org/learn" className="card">
+
+          {/* <a href="https://nextjs.org/learn" className="card">
             <h3>Learn &rarr;</h3>
             <p>Learn about Next.js in an interactive course with quizzes!</p>
           </a>
@@ -59,18 +67,17 @@ export default function Home() {
             <p>
               Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
-          </a>
-        </div>
+          </a> */}
+        {/* </div> */}
       </main>
 
       <footer>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://zayyanfaizal.com"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
+          Built by Zayyan Faizal
         </a>
       </footer>
 
@@ -95,7 +102,7 @@ export default function Home() {
 
         footer {
           width: 100%;
-          height: 100px;
+          height: 50px;
           border-top: 1px solid #eaeaea;
           display: flex;
           justify-content: center;
@@ -164,9 +171,9 @@ export default function Home() {
         }
 
         .card {
-          margin: 1rem;
+          margin: .5rem;
           flex-basis: 45%;
-          padding: 1.5rem;
+          padding: .25rem;
           text-align: left;
           color: inherit;
           text-decoration: none;
