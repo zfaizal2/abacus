@@ -74,8 +74,8 @@ export default function Home() {
       <footer>
         <a
           href="https://zayyanfaizal.com"
-          target="_blank"
-          rel="noopener noreferrer"
+          //target="_blank"
+          //rel="noopener noreferrer"
         >
           Built by Zayyan Faizal
         </a>
@@ -103,7 +103,7 @@ export default function Home() {
         footer {
           width: 100%;
           height: 50px;
-          border-top: 1px solid #eaeaea;
+          border-top: 2px solid #eaeaea;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -172,12 +172,14 @@ export default function Home() {
 
         .card {
           margin: .5rem;
+          height: 40px;
           flex-basis: 45%;
           padding: .25rem;
           text-align: left;
-          color: inherit;
+          color: #FFFFFF;
+          background:#0275D8;
           text-decoration: none;
-          border: 1px solid #eaeaea;
+          border: 1px solid #0275D8;
           border-radius: 10px;
           transition: color 0.15s ease, border-color 0.15s ease;
         }
@@ -186,7 +188,7 @@ export default function Home() {
         .card:focus,
         .card:active {
           color: #0070f3;
-          border-color: #0070f3;
+          border-color: #FFFFFF;
         }
 
         .card h3 {
