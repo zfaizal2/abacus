@@ -1,6 +1,6 @@
-import firebase from "firebase/app";
-import firebaseui from "firebase/app";
-import "firebase/auth";
+// import firebase from "firebase/app";
+// import firebaseui from "firebase/app";
+// import "firebase/auth";
 // import {firebaseConfig} from "../secrets"
 import Head from 'next/head'
 import Link from 'next/link'
@@ -42,19 +42,18 @@ export default function SignUp() {
     //     // Privacy policy url.
     //     //privacyPolicyUrl: '<your-privacy-policy-url>'
     //   };
-    var ui =  firebase.auth().AuthUI(firebase.auth());
-    ui.start('#firebaseui-auth-container', {
-        signInOptions: [
-          firebase.auth.EmailAuthProvider.PROVIDER_ID
-        ],
-        // Other config options...
-      });
+    // var ui =  firebase.auth().AuthUI(firebase.auth());
+    // ui.start('#firebaseui-auth-container', {
+    //     signInOptions: [
+    //       firebase.auth.EmailAuthProvider.PROVIDER_ID
+    //     ],
+    //     // Other config options...
+    //   });
     return (
         <Layout>
             <div>This is the sign up page</div>
-            <h1>Welcome to My Awesome App</h1>
-            <div id="firebaseui-auth-container"></div>
-            <div id="loader">Loading...</div>
+            {/* <div id="firebaseui-auth-container"></div>
+            <div id="loader">Loading...</div> */}
         </Layout>
     )
 }
