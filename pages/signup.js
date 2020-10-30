@@ -1,7 +1,7 @@
 import firebase from "firebase/app";
 import firebaseui from "firebase/app";
 import "firebase/auth";
-import {firebaseConfig} from "../secrets"
+// import {firebaseConfig} from "../secrets"
 import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '../components/layout'
