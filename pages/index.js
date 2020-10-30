@@ -32,7 +32,8 @@ export default function Home() {
         </h1>
 
         <p className="description">
-          No more spreadsheets. No more guessing.
+          No more spreadsheets. No more guessing. 
+          <p>Abacus keeps track of your GPA and grades throughout a semester.</p>
         </p>
         <MyForm/>
         {/* <Link href="/login" >
