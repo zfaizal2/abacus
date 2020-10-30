@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import MyForm from './myform'
 // var firebase = require('firebase');
 // var firebaseui = require('firebaseui');
 // var ui = new firebaseui.auth.AuthUI(firebase.auth());
@@ -33,7 +34,8 @@ export default function Home() {
         <p className="description">
           No more spreadsheets. No more guessing.
         </p>
-        <Link href="/login" >
+        <MyForm/>
+        {/* <Link href="/login" >
         <div className="card">
             <h4>Log In</h4>
           </div>
@@ -43,7 +45,7 @@ export default function Home() {
           <div className="card">
             <h4>Sign Up</h4>
           </div>
-          </Link>
+          </Link> */}
 
 
           {/* <a href="https://nextjs.org/learn" className="card">
