@@ -79,13 +79,13 @@ export default function Home() {
       </main>
 
       <footer>
-        <a
+        {/* <a
           href="https://zayyanfaizal.com"
           //target="_blank"
           //rel="noopener noreferrer"
         >
           Built by Zayyan Faizal
-        </a>
+        </a> */}
       </footer>
 
       <style jsx>{`
