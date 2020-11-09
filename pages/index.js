@@ -26,15 +26,19 @@ export default function Home() {
 
       <main>
           
-        <h1 className="title">
+        <h2 className="title">
         <div><img src="/abacus.png" alt = "abacus logo" className = "logo"/></div>
           abacus grades
-        </h1>
+        </h2>
 
         <p className="description">
           No more spreadsheets. No more guessing. 
           <p>Abacus keeps track of your GPA and grades throughout a semester.</p>
         </p>
+
+        <div><img src="/abacus_design.png" alt = "abacus design" className = "mockup"/></div>
+        
+        <p className="description"> Sign up for our mailing list! </p>
         <MyForm/>
         {/* <Link href="/login" >
         <div className="card">
@@ -141,7 +145,7 @@ export default function Home() {
         .title {
           margin: 0;
           line-height: 1.15;
-          font-size: 4rem;
+          font-size: 3rem;
         }
 
         .title,
@@ -207,6 +211,11 @@ export default function Home() {
 
         .logo {
           height: 1em;
+        }
+
+        .mockup {
+            height: 17em;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
 
         @media (max-width: 600px) {
