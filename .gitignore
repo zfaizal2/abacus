@@ -1,30 +1,33 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-secrets.js
+frontend/secrets.js
 # dependencies
-/node_modules
-/.pnp
-.pnp.js
+frontend/node_modules
+backend/node_modules
+
+frontend/.pnp
+frontend/.pnp.js
 
 # testing
-/coverage
+frontend/coverage
 
 # next.js
-/.next/
-/out/
+frontend/.next/
+frontend/out/
 
 # production
-/build
+frontend/build
 
 # misc
-.DS_Store
+frontend/.DS_Store
 
 # debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
 
 # local env files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+backend/.env.local
+frontend/.env.local
+frontend.env.development.local
+frontend/.env.test.local
+frontend.env.production.local
