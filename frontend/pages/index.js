@@ -5,14 +5,32 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 import LoginButton from './api/login';
-
-
+import auth0 from './api/utils/auth0';
+import {useFetchUser} from './api/utils/user'
   
-export default function Home() {
+export default function Home({user}) {
+    // const {user, loading} =  useFetchUser();
+    // console.log(user, loading);
   return (
       
     <div className="container">
-        <a href="/api/login">Login</a>
+        <div className="flex">
+            {user ? (
+                <a
+                    href="/api/logout"
+                    className="rounded bg-blue-500 hover:bg-blue-600 text-white py-2 px-4"
+                >
+                    Logout
+                </a>
+            ) : (
+                <a
+                    href="/api/login"
+                    className="rounded bg-blue-500 hover:bg-blue-600 text-white py-2 px-4"
+                >
+                    Login
+                </a>
+            )}
+        </div>
 
       <Head>
         <title>Abacus</title>
@@ -28,51 +46,16 @@ export default function Home() {
           abacus grades
         </h2>
 
-        <p className="description">
+        <div className="description">
           No more spreadsheets. No more guessing. 
           <p>Abacus keeps track of your GPA and grades throughout a semester.</p>
-        </p>
+        </div>
 
         <div><img src="/abacus_design.png" alt = "abacus design" className = "mockup"/></div>
         
         <p className="description"> Sign up for our mailing list! </p>
         <MyForm/>
-        {/* <Link href="/login" >
-        <div className="card">
-            <h4>Log In</h4>
-          </div>
-        </Link>
 
-        <Link href="/signup">
-          <div className="card">
-            <h4>Sign Up</h4>
-          </div>
-          </Link> */}
-
-
-          {/* <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a> */}
-        {/* </div> */}
       </main>
 
       <footer>
@@ -241,6 +224,18 @@ export default function Home() {
   )
 }
 
-// export async function getServerSideProps(context) {
+export async function getServerSideProps(context) {
+    const session = await auth0.getSession(context.req);
+    // console.log("227")
+    console.log(session);
+    if (session?.user) {
+        console.log("230")
+        //console.log(session.accessToken);
+    }
     
-// }
+    return {
+        props: {
+            user: session?.user || null,
+        },
+    };
+}
