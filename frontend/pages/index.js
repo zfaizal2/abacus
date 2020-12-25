@@ -9,8 +9,7 @@ import auth0 from './api/utils/auth0';
 import {useFetchUser} from './api/utils/user'
   
 export default function Home({user}) {
-    // const {user, loading} =  useFetchUser();
-    // console.log(user, loading);
+
   return (
       
     <div className="container">
@@ -226,12 +225,6 @@ export default function Home({user}) {
 
 export async function getServerSideProps(context) {
     const session = await auth0.getSession(context.req);
-    // console.log("227")
-    console.log(session);
-    if (session?.user) {
-        console.log("230")
-        //console.log(session.accessToken);
-    }
     
     return {
         props: {
