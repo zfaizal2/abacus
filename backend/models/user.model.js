@@ -28,6 +28,7 @@ var UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   school: { type: String, required: true },
+  userID: { type: String, required: true},
   terms: [termsSchema]
 });
 
