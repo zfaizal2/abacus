@@ -29,7 +29,7 @@ var UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   school: { type: String, required: true },
   userID: { type: String, required: true},
-  terms: [termsSchema]
+  terms: []
 });
 
 // Export the Mongoose model
