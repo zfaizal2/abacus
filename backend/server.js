@@ -3,7 +3,7 @@ const cors = require('cors');
 require('dotenv').config();
 const mongoose = require('mongoose');
 const User = require("./models/user.model")
-// router = express.Router();
+router = express.Router();
 const SUCCESS = 200;
 const NOT_FOUND = 404;
 const SERVER_ERR = 500;
@@ -35,14 +35,14 @@ connection.once('open', () => {
 })
 
 
-app.use(cors());
+//app.use(cors());
 app.use(express.json());
 
-// require("./routes");
+ require("./routes")(app, router);
 
 
 app.post("/user", async function(req, res) {
-    var authKey = req.body["user_id"]
+    const authKey = req.body["user_id"]
     var userMsg = {userID:`${authKey}`};
     const userThing = await User.exists(userMsg)
     if (userThing) {

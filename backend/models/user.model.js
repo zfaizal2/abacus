@@ -13,13 +13,13 @@ const categorySchema = new mongoose.Schema({
 })
 
 const classSchema = new mongoose.Schema({
-    className: String,
+    className: { type: String, required: false },
     categories: [categorySchema]
 })
 
 
 const termsSchema = new mongoose.Schema({
-    termName: String,
+    termName: { type: String, required: true, unique:true },
     classes: [classSchema]
 })
 
@@ -34,7 +34,9 @@ var UserSchema = new mongoose.Schema({
 
 // Export the Mongoose model
 const User = mongoose.model("User", UserSchema);
-module.exports = User
+const Term = mongoose.model("Term", termsSchema);
+const Class = mongoose.model("Class", classSchema);
+module.exports = {User, Term, Class}
 
 
 // User info
