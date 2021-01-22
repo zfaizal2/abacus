@@ -13,7 +13,7 @@ const categorySchema = new mongoose.Schema({
 })
 
 const classSchema = new mongoose.Schema({
-    className: { type: String, required: false },
+    className: { type: String, required: true },
     categories: [categorySchema]
 })
 
@@ -29,7 +29,7 @@ var UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   school: { type: String, required: true },
   userID: { type: String, required: true},
-  terms: []
+  terms: [termsSchema]
 });
 
 // Export the Mongoose model
