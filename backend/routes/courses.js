@@ -20,13 +20,14 @@ module.exports =  function(router) {
 
         //termName and search
         var userTerm = req.body["term"];
+        var classHours = req.body["hours"];
         var userFind = {userID:`${authKey}`};
         
         var termFind = {term:`${userTerm}`};
         var userClass = req.body["course"];
         var userObj = await User.findOne(userFind);
         var userTerms = userObj.terms;
-        var newClass = new Class({className: userClass});
+        var newClass = new Class({className: userClass, hours: classHours});
         for (var i = 0; i <= userTerms.length; i++) {
             if (userTerms[i].termName = userTerm) {
                 userObj.terms[i].classes.push(newClass);
@@ -34,14 +35,17 @@ module.exports =  function(router) {
                     function(err){
                         if (err){
                             res.status(400).send(err);
+                        } else {
+                            res.status(200).send(userObj.terms);
                         }
                     }
                 )
+                
                 break;
             }
         }
 
-        res.status(200).send(userObj.terms);
+        
     })
   return router;  
 };

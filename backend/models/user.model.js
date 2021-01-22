@@ -14,6 +14,7 @@ const categorySchema = new mongoose.Schema({
 
 const classSchema = new mongoose.Schema({
     className: { type: String, required: true },
+    hours: {type: Number, required: true},
     categories: [categorySchema]
 })
 
