@@ -2,13 +2,14 @@
 var mongoose = require("mongoose");
 
 const assignmentSchema = new mongoose.Schema({
-    assignment: String,
-    givenScore: Number,
-    totalScore: Number
+    assignment: {type: String, required: true},
+    givenScore: {type: Number, required: true},
+    totalScore: {type: Number, required: true}
 })
 
 const categorySchema = new mongoose.Schema({
-    category: String,
+    category: {type: String, required: true},
+    pctWeight: {type: Number, required: true},
     assignments: [assignmentSchema]
 })
 
@@ -37,7 +38,11 @@ var UserSchema = new mongoose.Schema({
 const User = mongoose.model("User", UserSchema);
 const Term = mongoose.model("Term", termsSchema);
 const Class = mongoose.model("Class", classSchema);
-module.exports = {User, Term, Class}
+const Category = mongoose.model("Category", categorySchema);
+const Assignment = mongoose.model("Assignment", assignmentSchema);
+
+
+module.exports = {User, Term, Class, Category, Assignment}
 
 
 // User info
@@ -48,8 +53,12 @@ module.exports = {User, Term, Class}
 // terms: [
 //     FALL2020: [
 //         class1: 
-//             categories:
-//                 category1: [assignment1, assignment2]
+//             categories:[
+//                 category1: [{assignment1}, {
+//                                                  assignmentName:exam1,
+//                                                  score: 32,
+//                                                  total: 100
+//                                                      }]
 //         class2,
 //         class3
 //     ],

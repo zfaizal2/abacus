@@ -1,6 +1,4 @@
 const {User, Term, Class} = require("../models/user.model");
-const terms = require("./terms");
-
 module.exports =  function(router) {
     const coursesRoute = router.route("/courses");
     const courseRoute = router.route("/courses/:id");
@@ -23,7 +21,6 @@ module.exports =  function(router) {
         var classHours = req.body["hours"];
         var userFind = {userID:`${authKey}`};
         
-        var termFind = {term:`${userTerm}`};
         var userClass = req.body["course"];
         var userObj = await User.findOne(userFind);
         var userTerms = userObj.terms;
