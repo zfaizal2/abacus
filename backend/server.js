@@ -4,7 +4,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false);
 
-const User = require("./models/user.model")
+const {User, Term, Class, Category} = require("./models/user.model");
 router = express.Router();
 const SUCCESS = 200;
 const NOT_FOUND = 404;
@@ -44,7 +44,8 @@ app.use(express.json());
 
 
 app.post("/user", async function(req, res) {
-    const authKey = req.body["user_id"]
+    //console.log(sub)
+    const authKey = req.body["sub"]
     var userMsg = {userID:`${authKey}`};
     const userThing = await User.exists(userMsg)
     if (userThing) {
