@@ -14,7 +14,9 @@ import Layout from '../components/layout';
 
 export default function Profile({user}) {
     const [terms, setTerms] = useState([]);
-    const [menu, setMenu] = useState();
+    const [curTerm, setCurTerm] = useState("");
+    const [termData, setTermData] = useState({})
+    //useEffect for setup
       useEffect(() => {
         console.log('trigger')
         console.log(user)
@@ -34,19 +36,22 @@ export default function Profile({user}) {
           .then(response => response.text())
           .then(
               result => {
-                  //console.log(result)
                   setTerms((JSON.parse(result))["message"])
-                //   setMenu(
-
-                    
-                //   )
               }
             )
           .catch(error => console.log('error', error));
-
-
-          console.log(menu)
       }, [])
+
+      useEffect(() =>{
+        var thisTerm = curTerm.slice(1, -1)
+        for (var i = 0; i < terms.length; i++) {
+            if (terms[i]["termName"] == thisTerm) {
+                console.log(terms[i])
+                setTermData(terms[i]);
+                break;
+            }
+        }
+      }, [curTerm])
 
         return (
 
@@ -54,12 +59,16 @@ export default function Profile({user}) {
                 <div>{user["name"]}</div>
                 <img src={user["picture"]} style={{borderRadius: "50%"}}></img>
                 <div>{JSON.stringify(user)}</div>
-                <select name="terms" id="term-select">
+                <select name="terms" id="term-select" onChange={e => setCurTerm(e.currentTarget.value)}>
                     {terms.map(term =>
                         // <div>term</div>
-                        <option value={JSON.stringify(term["termName"])}>{JSON.stringify(term["termName"]).toLowerCase().replace(/['"]+/g, '')}</option>
+                        <option value={JSON.stringify(term["termName"])}  >
+                            {JSON.stringify(term["termName"]).toLowerCase().replace(/['"]+/g, '')}
+                        </option>
                         )}
                 </select>
+                <div>{JSON.stringify(termData["classes"])}</div>
+                {/* <div>{terms.find(element => (element["termData"] == curTerm.slice(1,-1)))}</div> */}
             </div>
 
         )
