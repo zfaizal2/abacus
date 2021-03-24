@@ -3,7 +3,7 @@ import Link from 'next/link'
 import MyForm from './myform'
 import React, {useState, useEffect} from "react";
 import { Auth0Provider } from "@auth0/auth0-react";
-import {Grid, Col, Result, message, Menu, Dropdown} from "antd"
+import {Grid, Col, Result, message, Menu, Dropdown, Row, Card} from "antd"
 import { DownOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import auth0 from './api/utils/auth0';
@@ -16,6 +16,7 @@ export default function Profile({user}) {
     const [terms, setTerms] = useState([]);
     const [curTerm, setCurTerm] = useState("");
     const [termData, setTermData] = useState({})
+    // const [classes, setClasses] = useState({})
     //useEffect for setup
       useEffect(() => {
         console.log('trigger')
@@ -42,35 +43,53 @@ export default function Profile({user}) {
           .catch(error => console.log('error', error));
       }, [])
 
+      //for terms list
       useEffect(() =>{
         var thisTerm = curTerm.slice(1, -1)
         for (var i = 0; i < terms.length; i++) {
             if (terms[i]["termName"] == thisTerm) {
-                console.log(terms[i])
+                console.log(terms[i]["classes"])
                 setTermData(terms[i]);
                 break;
             }
         }
       }, [curTerm])
 
+    //   //classes list
+    //   useEffect(() => {
+
+    //   }
+
         return (
-
-            <div className="container">
-                <div>{user["name"]}</div>
-                <img src={user["picture"]} style={{borderRadius: "50%"}}></img>
-                <div>{JSON.stringify(user)}</div>
-                <select name="terms" id="term-select" onChange={e => setCurTerm(e.currentTarget.value)}>
-                    {terms.map(term =>
-                        // <div>term</div>
-                        <option value={JSON.stringify(term["termName"])}  >
-                            {JSON.stringify(term["termName"]).toLowerCase().replace(/['"]+/g, '')}
-                        </option>
-                        )}
-                </select>
-                <div>{JSON.stringify(termData["classes"])}</div>
-                {/* <div>{terms.find(element => (element["termData"] == curTerm.slice(1,-1)))}</div> */}
-            </div>
-
+            <>
+                <Col>
+                    <Card style={{dropShadow:"30px 10px 4px #4444dd"}}>
+                    
+                    <img src={user["picture"]} style={{borderRadius: "50%", width:"5rem"}}></img>
+                    <div>{user["name"]}</div>
+                    </Card>
+                </Col>
+                <Col>
+                <Row>
+                    <select name="terms" id="term-select" onChange={e => setCurTerm(e.currentTarget.value)}>
+                        {terms.map(term =>
+                            // <div>term</div>
+                            <option value={JSON.stringify(term["termName"])}  >
+                                {JSON.stringify(term["termName"]).toLowerCase().replace(/['"]+/g, '')}
+                            </option>
+                            )}
+                    </select>
+                    <div>
+                        {termData["classes"] ? 
+                            termData["classes"].map(classData =>
+                            <div>{JSON.stringify(classData["className"]).replace(/['"]+/g, '')}</div>) :
+                            <div>"No classes"</div>
+                        }
+                    </div> 
+                    {/* <div>{terms.find(element => (element["termData"] == curTerm.slice(1,-1)))}</div> */}
+                    </Row>
+                </Col>
+                </>
         )
 }
 
