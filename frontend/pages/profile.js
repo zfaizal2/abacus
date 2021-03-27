@@ -16,6 +16,7 @@ export default function Profile({user}) {
     const [terms, setTerms] = useState([]);
     const [curTerm, setCurTerm] = useState("");
     const [termData, setTermData] = useState({})
+    const [curCats, setCurCats] = useState([])
     // const [classes, setClasses] = useState({})
     //useEffect for setup
       useEffect(() => {
@@ -55,6 +56,11 @@ export default function Profile({user}) {
         }
       }, [curTerm])
 
+
+    //   useEffect(() =>{
+          
+    //   }, [curClass])
+
     //   //classes list
     //   useEffect(() => {
 
@@ -62,6 +68,7 @@ export default function Profile({user}) {
 
         return (
             <>
+            <Row>
                 <Col>
                     <Card style={{dropShadow:"30px 10px 4px #4444dd"}}>
                     
@@ -71,7 +78,7 @@ export default function Profile({user}) {
                 </Col>
                 <Col>
                 <Row>
-                    <select name="terms" id="term-select" onChange={e => setCurTerm(e.currentTarget.value)}>
+                    <select name="terms" id="term-select" onChange={e => {setCurTerm(e.currentTarget.value); setCurCats()}}>
                         {terms.map(term =>
                             // <div>term</div>
                             <option value={JSON.stringify(term["termName"])}  >
@@ -79,16 +86,35 @@ export default function Profile({user}) {
                             </option>
                             )}
                     </select>
+                </Row>
+                <Row>
                     <div>
                         {termData["classes"] ? 
                             termData["classes"].map(classData =>
-                            <div>{JSON.stringify(classData["className"]).replace(/['"]+/g, '')}</div>) :
-                            <div>"No classes"</div>
+                            <div onClick={e => setCurCats(classData["categories"])}>{JSON.stringify(classData["className"]).replace(/['"]+/g, '')}</div>) :
+                            <div>No classes</div>
                         }
                     </div> 
+                    <div>
+                        {curCats ?
+                        curCats.map(assignmentData =>
+                            <Row>
+                                <Col>
+                                    {JSON.stringify(assignmentData["category"]).replace(/['"]+/g, '')}
+                                </Col>
+                                <Col>
+                                    {JSON.stringify(assignmentData["pctWeight"]).replace(/['"]+/g, '')}
+                                </Col>
+                            </Row>
+                            
+                            ) :
+                            <div></div>
+                            }
+                    </div>
                     {/* <div>{terms.find(element => (element["termData"] == curTerm.slice(1,-1)))}</div> */}
                     </Row>
                 </Col>
+                </Row>
                 </>
         )
 }
