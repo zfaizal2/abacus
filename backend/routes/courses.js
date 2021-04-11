@@ -8,10 +8,12 @@ module.exports =  function(router) {
     // {
     //     "userID":"google-oauth2|105237502290369756356",
     //     "term":"SPRING2021",
-    //     "course":"CS221"
+    //     "course":"CS221",
+    //     "hours":3,
     // }
 
     coursesRoute.post(async (req, res) => {
+        console.log('hello')
         //userId and search param
         var authKey = req.body["userID"];
         //var userObj = await User.findOne(userFind);
