@@ -43,31 +43,40 @@ app.use(express.json());
  require("./routes")(app, router);
 
 
-app.post("/user", async function(req, res) {
+app.post("/users", async function(req, res) {
     //console.log(sub)
-    const authKey = req.body["sub"]
-    var userMsg = {userID:`${authKey}`};
+    const email = req.body["email"]
+    const authKey = req.body["user_id"]
+    var userMsg = {email: `${email}`,userID:`${authKey}`};
     const userThing = await User.exists(userMsg)
-    if (userThing) {
-        var userClasses = await User.findOne(userMsg);
-        res.status(SUCCESS).send({
-            message: userClasses["terms"]
-        });
-    } else {
-        var newName = req.body["name"]
-        var newEmail = req.body["email"]
-        var newSchool = "University of Illinois"
-        const newUser = new User({
-            name: newName,
-            email: newEmail,
-            school: newSchool,
-            userID: authKey
-        })
-        newUser.save();
-        res.status(SUCCESS).send({
-            message: "New User Created"
-        });
-    }
+
+    var newName = req.body["name"]
+    var newEmail = req.body["email"]
+    var newSchool = "University of Illinois"
+    console.log(authKey)
+    const newUser = new User({
+        name: newName,
+        email: newEmail,
+        school: newSchool,
+        userID: authKey,
+        terms: []
+    })
+    newUser.save();
+    res.status(SUCCESS).send({
+        message: "New User Created"
+    });
+
+})
+
+
+app.get("/users", async function(req, res) {
+    const email = req.body["email"]
+    const authKey = req.body["sub"]
+    var userMsg = {email: `${email}`,userID:`${authKey}`};
+    console.log(userMsg)
+    const userThing = await User.exists(userMsg)
+    console.log(userThing)
+    res.send(SUCCESS)
 })
 
 app.listen(port, async () => {

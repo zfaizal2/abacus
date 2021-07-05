@@ -1,13 +1,20 @@
 const {User, Term} = require("../models/user.model")
 
 module.exports =  function(router) {
-    const termsRoute = router.route("/terms");
+    const addTermsRoute = router.route("/terms");
+    const getTermsRoute = router.route("/terms/:userID");
     // constants
     const SUCCESS = 200;
     const NOT_FOUND = 404;
     const SERVER_ERR = 500;
 
-    termsRoute.post(async (req, res) => {
+    getTermsRoute.get(async (req, res) => {
+        var userID = req.params.userID
+        var userObj = await User.findById(userID)
+        res.status(SUCCESS).send({message:userObj.terms})
+    })  
+
+    addTermsRoute.post(async (req, res) => {
         //authentication for user
         var authKey = req.body["userID"];
         var userFind = {userID:`${authKey}`};
@@ -45,7 +52,7 @@ module.exports =  function(router) {
         //save term to user
 
     })
-  return router;  
+  return router; 
 };
 
 /* sample post req

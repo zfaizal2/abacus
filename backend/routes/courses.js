@@ -13,38 +13,18 @@ module.exports =  function(router) {
     // }
 
     coursesRoute.post(async (req, res) => {
-        console.log('hello')
+        console.log(req.body)
         //userId and search param
-        var authKey = req.body["userID"];
-        //var userObj = await User.findOne(userFind);
-
-        //termName and search
-        var userTerm = req.body["term"];
+        var userID = req.body["userID"];
+        var termID = req.body["termID"]
         var classHours = req.body["hours"];
-        var userFind = {userID:`${authKey}`};
-        
         var userClass = req.body["course"];
-        var userObj = await User.findOne(userFind);
-        var userTerms = userObj.terms;
         var newClass = new Class({className: userClass, hours: classHours});
-        for (var i = 0; i <= userTerms.length; i++) {
-            if (userTerms[i].termName = userTerm) {
-                userObj.terms[i].classes.push(newClass);
-                userObj.save(
-                    function(err){
-                        if (err){
-                            res.status(400).send(err);
-                        } else {
-                            res.status(200).send(userObj.terms);
-                        }
-                    }
-                )
-                
-                break;
-            }
-        }
-
-        
+        var userObj = await User.findById(userID);
+        userObj.terms.id(termID).classes.push(newClass)
+        userObj.save()
+        res.send(200)
+    
     })
   return router;  
 };
