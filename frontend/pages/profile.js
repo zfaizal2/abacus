@@ -24,32 +24,39 @@ export default function Profile({user}) {
     const [newClass, setNewClass] = React.useState({})
     const [classname, setClassname] = React.useState('')
     const [crHrs, setCrHrs] = React.useState(0) 
+    const [userKey, setUserKey] = React.useState('')
     const [userID, setUserID] = React.useState('')
+    const [termID, setTermID] = React.useState('')
 
-    // const [classes, setClasses] = useState({})
+
+
     //useEffect for setup
       useEffect(() => {
-        console.log(user)
-        setUserID(user["sub"])
+        setUserKey(user["sub"])
+
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        
-        var raw = JSON.stringify(user)  //JSON.stringify({"created_at":"2020-12-24T02:31:07.374Z","email":"zayyanf@gmail.com","email_verified":true,"family_name":"Faizal","given_name":"Zayyan","identities":[{"provider":"google-oauth2","user_id":"105237502290369756356","connection":"google-oauth2","isSocial":true}],"locale":"en","name":"Zayyan Faizal","nickname":"zayyanf","picture":"https://lh3.googleusercontent.com/a-/AOh14GiOBUHKh-Qc6nhhxnsxX4iJkNtl9J22NUqfwm4PraA=s96-c","updated_at":"2020-12-25T05:14:05.205Z","user_id":"google-oauth2|105237502290369756356","last_ip":"73.210.132.168","last_login":"2020-12-25T05:14:05.204Z","logins_count":7,"blocked_for":[],"guardian_authenticators":[]});
-        
         var requestOptions = {
-          method: 'POST',
-          headers: myHeaders,
-          body: raw,
-          redirect: 'follow'
-        };
-        
-        fetch("http://localhost:5000/user", requestOptions)
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+          }; 
+          //get mongo ID
+        fetch(`http://localhost:5000/users/${userKey}`, requestOptions)
+            .then(response => response.text())
+            .then(
+                result => {
+                    var res = JSON.parse(result)
+                    setUserID(res["message"])
+                }
+            )
+            // get Data
+        fetch(`http://localhost:5000/terms/${userID}`, requestOptions)
           .then(response => response.text())
           .then(
               result => {
-                  setTerms((JSON.parse(result))["message"])
-                  
-                  console.log(terms.length > 0 )
+                  var res = JSON.parse(result)
+                  setTerms(res["message"])
               }
             )
           .catch(error => console.log('error', error));
@@ -60,8 +67,9 @@ export default function Profile({user}) {
         var thisTerm = curTerm.slice(1, -1)
         for (var i = 0; i < terms.length; i++) {
             if (terms[i]["termName"] == thisTerm) {
-                console.log(terms[i]["classes"])
-                setTermData(terms[i]);
+                setTermData(terms[i]["classes"]);
+                console.log(terms[i]._id)
+                setTermID(terms[i]._id)
                 break;
             }
         }
@@ -74,7 +82,7 @@ export default function Profile({user}) {
           myHeaders.append("Content-Type", "application/json");
           var msg = {
               "userID":userID,
-              "term":termClass,
+              "termID":termID,
               "course":classname,
               "hours":crHrs
           }
@@ -91,9 +99,10 @@ export default function Profile({user}) {
           .then(response => response.text())
           .then(
               result => {
-                //   setTerms((JSON.parse(result))["message"])
+                   setTerms((JSON.parse(result))["message"])
                 //   
-                  console.log(result.body)
+                  console.log((JSON.parse(result)))
+                  setTerms((JSON.parse(result)))
               }
             )
           .catch(error => console.log('error', error))
@@ -114,14 +123,7 @@ export default function Profile({user}) {
           setConfirmLoading(false);
         }, 500);
       };
-    //   useEffect(() =>{
-          
-    //   }, [curClass])
 
-    //   //classes list
-    //   useEffect(() => {
-
-    //   }
 
         return (
             <>
@@ -137,19 +139,20 @@ export default function Profile({user}) {
                 <Row>
                 {terms.length >= 1 ?
                     <select name="terms" id="term-select" onChange={e => {setCurTerm(e.currentTarget.value); setCurCats()}}>
+                       
                         {terms.map(term =>
                             // <div>term</div>
-                            <option value={JSON.stringify(term["termName"])}  >
+                            <option key={term._id} value={JSON.stringify(term["termName"])}  >
                                 {JSON.stringify(term["termName"]).toLowerCase().replace(/['"]+/g, '')}
                             </option>)}
                     </select>: 
-                <div> Add a term to get started! </div>}
+                <div> Add a term to get started!  </div>}
                 </Row>
             <Row>
                 <Col>
                     <div>
-                        {termData["classes"] ? 
-                            termData["classes"].map(classData =>
+                        {termData.length > 0 ? 
+                            termData.map(classData =>
                             <div onClick={e => setCurCats(classData["categories"])}>{JSON.stringify(classData["className"]).replace(/['"]+/g, '')}</div>) :
                             <div>No classes</div>
                         }
@@ -170,13 +173,13 @@ export default function Profile({user}) {
                     </div> 
                     <Row>
                         <Button type="primary" onClick={e => setNewClassState(true)}> Add Class! </Button>
-                        {/* <Modal
+                        <Modal
                             title="New Class"
                             visible={visible}
                             onOk={handleOk}
                             confirmLoading={confirmLoading}
-                        > */}
-                        {/* </Modal> */}
+                        >
+                        </Modal>
                     </Row>
                 </Col>
                     <div>

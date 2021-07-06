@@ -17,7 +17,6 @@ const port = process.env.PORT || 5000;
 const uri = process.env.ATLAS_URI;
 
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true});
-//mongoose.connect(uri, {useNewUrlParser: true});
 
 var allowCrossDomain = function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -69,19 +68,16 @@ app.post("/users", async function(req, res) {
 })
 
 
-app.get("/users", async function(req, res) {
-    const email = req.body["email"]
-    const authKey = req.body["sub"]
-    var userMsg = {email: `${email}`,userID:`${authKey}`};
-    console.log(userMsg)
-    const userThing = await User.exists(userMsg)
-    console.log(userThing)
-    res.send(SUCCESS)
+app.get("/users/:authKey", async function(req, res) {
+    console.log(req.params.authKey)
+    const userThing = await User.findOne({userID: req.params.authKey})
+    console.log(userThing._id)
+    res.status(SUCCESS).send({
+        message: userThing._id
+    })
 })
 
 app.listen(port, async () => {
-    // const userThing = await User.exists({userID:"google-oauth2|104472895282688655396"})
-    // console.log(userThing)
     console.log(`Server is running on port: ${port}`);
 })
 
