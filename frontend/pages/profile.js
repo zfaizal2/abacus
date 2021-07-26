@@ -8,6 +8,7 @@ import { DownOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import auth0 from './api/utils/auth0';
 import Layout from '../components/layout';
+import TermsList from '../components/termsList'
 // import { get } from 'mongoose';
 
 
@@ -29,9 +30,9 @@ export default function Profile({user}) {
     const [termID, setTermID] = React.useState('')
 
 
-
     //useEffect for setup
-      useEffect(() => {
+    useEffect(() => {
+
         setUserKey(user["sub"])
 
         var myHeaders = new Headers();
@@ -41,41 +42,25 @@ export default function Profile({user}) {
             headers: myHeaders,
             redirect: 'follow'
           }; 
-          //get mongo ID
-        fetch(`http://localhost:5000/users/${userKey}`, requestOptions)
+
+
+        //get mongo ID
+        var keyStatus = fetch(`http://localhost:5000/users/${userKey}`, requestOptions)
             .then(response => response.text())
             .then(
                 result => {
+                    // console.log(result)
                     var res = JSON.parse(result)
                     setUserID(res["message"])
                 }
             )
-            // get Data
-        fetch(`http://localhost:5000/terms/${userID}`, requestOptions)
-          .then(response => response.text())
-          .then(
-              result => {
-                  var res = JSON.parse(result)
-                  setTerms(res["message"])
-              }
-            )
-          .catch(error => console.log('error', error));
-      }, [])
 
-      //for terms list
-      useEffect(() =>{
-        var thisTerm = curTerm.slice(1, -1)
-        for (var i = 0; i < terms.length; i++) {
-            if (terms[i]["termName"] == thisTerm) {
-                setTermData(terms[i]["classes"]);
-                console.log(terms[i]._id)
-                setTermID(terms[i]._id)
-                break;
-            }
-        }
-      }, [curTerm])
+        }, [])
 
-      const handleClassFormSubmit = (e) => {
+
+
+
+    const handleClassFormSubmit = (e) => {
           setNewClass({CLASS:classname, HOURS:crHrs})
           var myHeaders = new Headers();
           var termClass = curTerm.replace(/['"]+/g, '')
@@ -99,30 +84,30 @@ export default function Profile({user}) {
           .then(response => response.text())
           .then(
               result => {
-                   setTerms((JSON.parse(result))["message"])
+                   //setTerms((JSON.parse(result))["message"])
                 //   
                   console.log((JSON.parse(result)))
-                  setTerms((JSON.parse(result)))
+                  //setTerms((JSON.parse(result)))
               }
             )
           .catch(error => console.log('error', error))
           setNewClassState(false)
-      }
+    }
 
 
-      const showModal = () => {
+    const showModal = () => {
         setVisible(true);
-      };
+    };
 
 
-      const handleOk = () => {
+    const handleOk = () => {
         setModalText('The modal will be closed after two seconds');
         setConfirmLoading(true);
         setTimeout(() => {
           setVisible(false);
           setConfirmLoading(false);
         }, 500);
-      };
+    };
 
 
         return (
@@ -136,18 +121,7 @@ export default function Profile({user}) {
                     </Card>
                 </Col>
                 <Col>
-                <Row>
-                {terms.length >= 1 ?
-                    <select name="terms" id="term-select" onChange={e => {setCurTerm(e.currentTarget.value); setCurCats()}}>
-                       
-                        {terms.map(term =>
-                            // <div>term</div>
-                            <option key={term._id} value={JSON.stringify(term["termName"])}  >
-                                {JSON.stringify(term["termName"]).toLowerCase().replace(/['"]+/g, '')}
-                            </option>)}
-                    </select>: 
-                <div> Add a term to get started!  </div>}
-                </Row>
+                <TermsList></TermsList>
             <Row>
                 <Col>
                     <div>
@@ -215,4 +189,3 @@ export async function getServerSideProps(context) {
         },
     };
 }
-

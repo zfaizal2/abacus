@@ -9,7 +9,7 @@ module.exports =  function(router) {
     const SERVER_ERR = 500;
 
     getTermsRoute.get(async (req, res) => {
-        console.log('hit')
+        // console.log('hit')
         var userID = req.params.userID
         var userObj = await User.findById(userID)
         res.status(SUCCESS).send({message:userObj.terms})
