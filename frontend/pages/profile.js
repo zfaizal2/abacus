@@ -1,15 +1,17 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import MyForm from './myform'
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useLayoutEffect} from "react";
+import { Redirect } from 'react-router-dom';
 import { Auth0Provider } from "@auth0/auth0-react";
 import {Grid, Col, Button, Modal, Menu, Dropdown, Row, Card} from "antd"
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined } from '@ant-design/icons'; 
 import 'antd/dist/antd.css';
 import auth0 from './api/utils/auth0';
 import Layout from '../components/layout';
 import TermsList from '../components/termsList'
-// import { get } from 'mongoose';
+import { createMemoryHistory } from 'history';
+import { useRouter } from 'next/router'
 
 
 
@@ -28,11 +30,19 @@ export default function Profile({user}) {
     const [userKey, setUserKey] = React.useState('')
     const [userID, setUserID] = React.useState('')
     const [termID, setTermID] = React.useState('')
+    const [redirect, setRedirect] = useState(false)
+
+
+    const router = useRouter()
 
 
     //useEffect for setup
     useEffect(() => {
-
+        
+        if (!user) {
+            router.push("/")
+        }
+        else {
         setUserKey(user["sub"])
 
         var myHeaders = new Headers();
@@ -54,11 +64,8 @@ export default function Profile({user}) {
                     setUserID(res["message"])
                 }
             )
-
-        }, [])
-
-
-
+            }
+    }, [])
 
     const handleClassFormSubmit = (e) => {
           setNewClass({CLASS:classname, HOURS:crHrs})
@@ -112,6 +119,7 @@ export default function Profile({user}) {
 
         return (
             <>
+            {user ?
             <Row>
                 <Col>
                     <Card style={{dropShadow:"30px 10px 4px #4444dd"}}>
@@ -175,8 +183,10 @@ export default function Profile({user}) {
                     {/* <div>{terms.find(element => (element["termData"] == curTerm.slice(1,-1)))}</div> */}
             </Row>
                 </Col>
-                </Row>
+                </Row> :
+                  <></>  }
                 </>
+                        
         )
 }
 
