@@ -14,7 +14,6 @@ import { createMemoryHistory } from 'history';
 import { useRouter } from 'next/router'
 
 
-
 export default function Profile({user}) {
     const [terms, setTerms] = useState([]);
     const [curTerm, setCurTerm] = useState("");
@@ -133,11 +132,6 @@ export default function Profile({user}) {
             <Row>
                 <Col>
                     <div>
-                        {termData.length > 0 ? 
-                            termData.map(classData =>
-                            <div onClick={e => setCurCats(classData["categories"])}>{JSON.stringify(classData["className"]).replace(/['"]+/g, '')}</div>) :
-                            <div>No classes</div>
-                        }
                         {newClassState ?
                             <form>
                                 <label>

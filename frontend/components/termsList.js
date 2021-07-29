@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
-import {Grid, Col, Button, Modal, Menu, Dropdown, Row, Card} from "antd"
+import {Row} from "antd"
+import TermData from "./termData";
 
 
 export default function TermsList({userID}) {
@@ -8,6 +9,7 @@ export default function TermsList({userID}) {
     const [curCats, setCurCats] = useState([])
     const [termData, setTermData] = useState({})
     const [termID, setTermID] = React.useState('')
+    
 
     var myHeaders = new Headers();
     var requestOptions = {
@@ -16,15 +18,9 @@ export default function TermsList({userID}) {
         redirect: 'follow'
       }; 
 
-    // get Terms Data
-
-    
-
-    
-
     //for terms list
     useEffect(() =>{
-
+        // get Terms Data
         fetch(`http://localhost:5000/terms/5fe81c875d2445229c78cd3d`, requestOptions)
         .then(response => response.text())
         .then(
@@ -54,17 +50,22 @@ export default function TermsList({userID}) {
 
 
     return (
-        <Row>
-        {terms.length >= 1 ?
-            <select name="terms" id="term-select" onChange={e => {setCurTerm(e.currentTarget.value); setCurCats()}}>
-               
-                {terms.map(term =>
-                    // <div>term</div>
-                    <option key={term._id} value={JSON.stringify(term["termName"])}  >
-                        {JSON.stringify(term["termName"]).toLowerCase().replace(/['"]+/g, '')}
-                    </option>)}
-            </select>: 
-        <div> Add a term to get started!  </div>}
-        </Row>
+        <>
+            <Row>
+            {terms.length >= 1 ?
+                <select name="terms" id="term-select" onChange={e => {setCurTerm(e.currentTarget.value); setCurCats()}}>
+                
+                    {terms.map(term =>
+                        // <div>term</div>
+                        <option key={term._id} value={JSON.stringify(term["termName"])}  >
+                            {JSON.stringify(term["termName"]).toLowerCase().replace(/['"]+/g, '')}
+                        </option>)}
+                </select>: 
+            <div> Add a term to get started!  </div>}
+            </Row>
+            <Row>
+                <TermData termData={termData}></TermData>
+            </Row>
+        </>
     )
 }
