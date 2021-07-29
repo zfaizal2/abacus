@@ -119,67 +119,49 @@ export default function Profile({user}) {
         return (
             <>
             {user ?
-            <Row>
-                <Col>
-                    <Card style={{dropShadow:"30px 10px 4px #4444dd"}}>
-                    {user['picture'] ?
-                    <img src={user["picture"]} style={{borderRadius: "50%", width:"5rem"}}></img> : null}
-                    <div>{user["name"]}</div>
-                    </Card>
-                </Col>
-                <Col>
-                <TermsList></TermsList>
-            <Row>
-                <Col>
-                    <div>
-                        {newClassState ?
-                            <form>
-                                <label>
-                                    Classname: 
-                                    <input type="text" name="classname" value={classname} onChange={e => setClassname(e.target.value)}/>
-                                </label>
-                                <label>
-                                    Credit Hours: 
-                                    <input type="text" name="creditHours" value={crHrs} onChange={e => setCrHrs(e.target.value)}/>
-                                </label>
-                                <Button type="primary" onClick={e => handleClassFormSubmit(e)}> Submit </Button>
-                            </form> :
-                            null
-                        }
-                    </div> 
-                    <Row>
-                        <Button type="primary" onClick={e => setNewClassState(true)}> Add Class! </Button>
-                        <Modal
-                            title="New Class"
-                            visible={visible}
-                            onOk={handleOk}
-                            confirmLoading={confirmLoading}
-                        >
-                        </Modal>
+                <Row>
+                    <Col>
+                        <Card style={{dropShadow:"30px 10px 4px #4444dd"}}>
+                        {user['picture'] ?
+                        <img src={user["picture"]} style={{borderRadius: "50%", width:"5rem"}}></img> : null}
+                        <div>{user["name"]}</div>
+                        </Card>
+                    </Col>
+                    <Col>
+                    <TermsList></TermsList>
+                <Row>
+                    <Col>
+                        <div>
+                            {newClassState ?
+                                <form>
+                                    <label>
+                                        Classname: 
+                                        <input type="text" name="classname" value={classname} onChange={e => setClassname(e.target.value)}/>
+                                    </label>
+                                    <label>
+                                        Credit Hours: 
+                                        <input type="text" name="creditHours" value={crHrs} onChange={e => setCrHrs(e.target.value)}/>
+                                    </label>
+                                    <Button type="primary" onClick={e => handleClassFormSubmit(e)}> Submit </Button>
+                                </form> :
+                                null
+                            }
+                        </div> 
+                        <Row>
+                            <Button type="primary" onClick={e => setNewClassState(true)}> Add Class! </Button>
+                            <Modal
+                                title="New Class"
+                                visible={visible}
+                                onOk={handleOk}
+                                confirmLoading={confirmLoading}
+                            >
+                            </Modal>
+                            </Row>
+                        </Col>
                     </Row>
                 </Col>
-                    <div>
-                        {curCats ?
-                        curCats.map(assignmentData =>
-                            <Row>
-                                <Col>
-                                    {JSON.stringify(assignmentData["category"]).replace(/['"]+/g, '')}
-                                </Col>
-                                <Col style={{paddingLeft:"10px"}}>
-                                    {JSON.stringify(assignmentData["pctWeight"]).replace(/['"]+/g, '')}
-                                </Col>
-                            </Row>
-                            
-                            ) :
-                            <div></div>
-                            }
-                    </div>
-                    {/* <div>{terms.find(element => (element["termData"] == curTerm.slice(1,-1)))}</div> */}
-            </Row>
-                </Col>
-                </Row> :
-                  <></>  }
-                </>
+            </Row> : <></>  }
+        </>
                         
         )
 }
