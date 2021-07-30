@@ -69,9 +69,7 @@ app.post("/users", async function(req, res) {
 
 
 app.get("/users/:authKey", async function(req, res) {
-    console.log(req.params.authKey)
     const userThing = await User.findOne({userID: req.params.authKey})
-    console.log(userThing._id)
     res.status(SUCCESS).send({
         message: userThing._id
     })
