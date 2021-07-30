@@ -1,0 +1,25 @@
+.classCard {
+    width: 200px;
+    height: 100px;
+    background-color: #0275D8;
+
+    margin: 1rem;
+    border-radius: 15px;
+    justify-content: center;
+    display: flex;
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.14)) drop-shadow(0px 1px 5px rgba(0, 0, 0, 0.2));
+}
+
+.className {
+    text-decoration: solid;
+    color: white;
+
+    text-align: center;
+    font-size: 1.5rem;
+    
+}
+
+.classCode {
+    text-decoration: solid;
+}
+

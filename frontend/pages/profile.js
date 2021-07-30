@@ -121,6 +121,14 @@ export default function Profile({user}) {
             {user ?
                 <Row>
                     <Col>
+                    <Row>
+                        <Col>
+                            <img src="https://raw.githubusercontent.com/zfaizal2/abacus/main/frontend/public/abacus.png"></img>
+                        </Col>
+                        <Col>
+                            abacus
+                        </Col>
+                    </Row>
                         <Card style={{dropShadow:"30px 10px 4px #4444dd"}}>
                         {user['picture'] ?
                         <img src={user["picture"]} style={{borderRadius: "50%", width:"5rem"}}></img> : null}
