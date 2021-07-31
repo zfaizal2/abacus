@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {Row} from "antd"
 import TermData from "./termData";
-
+import styles from './termsList.module.css'
 
 export default function TermsList({userID}) {
     const [terms, setTerms] = useState([]);
@@ -53,7 +53,7 @@ export default function TermsList({userID}) {
         <>
             <Row>
             {terms.length >= 1 ?
-                <select name="terms" id="term-select" onChange={e => {setCurTerm(e.currentTarget.value); setCurCats()}}>
+                <select className={styles.customSelect} name="terms" id="term-select" onChange={e => {setCurTerm(e.currentTarget.value); setCurCats()}}>
                 
                     {terms.map(term =>
                         // <div>term</div>

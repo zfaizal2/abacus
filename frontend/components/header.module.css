@@ -1,0 +1,38 @@
+.title {
+    font-size: 2.5rem;
+    font-family: 'Lato';
+    padding: 1rem;
+    font-weight: 1000;
+}
+
+.logo {
+    size: 2rem;
+    padding: 1.5rem;
+}
+
+.signout {
+    margin-left: auto;
+    align-items: center;
+    display:flex;
+    padding: 1rem;
+}
+
+.signoutButton {
+    height: 2.5rem;
+    width: 4.5rem;
+    background-color: #0275D8;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.signoutText {
+    color: white;
+    font-family: 'Lato';
+    font-weight: 800;
+    margin-left: auto;
+    align-items: center;
+    display:flex;
+    justify-content: center;
+    height: 100%;
+}
