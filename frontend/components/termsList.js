@@ -9,7 +9,7 @@ export default function TermsList({userID}) {
     const [curCats, setCurCats] = useState([])
     const [termData, setTermData] = useState({})
     const [termID, setTermID] = React.useState('')
-    
+    const [term, setTerm] = React.useState({})
 
     var myHeaders = new Headers();
     var requestOptions = {
@@ -41,8 +41,12 @@ export default function TermsList({userID}) {
         for (var i = 0; i < terms.length; i++) {
             if (terms[i]["termName"] == thisTerm) {
                 setTermData(terms[i]["classes"]);
-                console.log(terms[i]._id)
+                // console.log(terms[i]._id)
                 setTermID(terms[i]._id)
+                setTerm({
+                    termID: terms[i]._id,
+                    classes: terms[i]["classes"]
+                })
                 break;
             }
         }
@@ -56,7 +60,6 @@ export default function TermsList({userID}) {
                 <select className={styles.customSelect} name="terms" id="term-select" onChange={e => {setCurTerm(e.currentTarget.value); setCurCats()}}>
                 
                     {terms.map(term =>
-                        // <div>term</div>
                         <option key={term._id} value={JSON.stringify(term["termName"])}  >
                             {JSON.stringify(term["termName"]).toLowerCase().replace(/['"]+/g, '')}
                         </option>)}
@@ -64,8 +67,7 @@ export default function TermsList({userID}) {
             <div> Add a term to get started!  </div>}
             </Row>
             <Row>
-                
-                <TermData termData={termData}></TermData>
+                <TermData termData={term}></TermData>
             </Row>
         </>
     )

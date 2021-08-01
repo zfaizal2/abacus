@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import MyForm from './myform'
-import React, {useState, useEffect, useLayoutEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { Redirect } from 'react-router-dom';
 import { Auth0Provider } from "@auth0/auth0-react";
 import {Grid, Col, Button, Modal, Menu, Dropdown, Row, Card} from "antd"
@@ -14,7 +14,8 @@ import { createMemoryHistory } from 'history';
 import { useRouter } from 'next/router'
 import Header from '../components/header'
 
-
+const UserContext = React.createContext();
+export {UserContext}
 
 export default function Profile({user}) {
     const [terms, setTerms] = useState([]);
@@ -32,7 +33,7 @@ export default function Profile({user}) {
     const [userID, setUserID] = React.useState('')
     const [termID, setTermID] = React.useState('')
     const [redirect, setRedirect] = useState(false)
-
+  
 
     const router = useRouter()
 
@@ -63,6 +64,7 @@ export default function Profile({user}) {
                     // console.log(result)
                     var res = JSON.parse(result)
                     setUserID(res["message"])
+
                 }
             )
             }
@@ -117,11 +119,13 @@ export default function Profile({user}) {
         }, 500);
     };
 
+    
 
         return (
             <>
             <Header/>
             {user ?
+            <UserContext.Provider value={userID}>
                 <Row>
                     <Col>
                         <Card style={{dropShadow:"30px 10px 4px #4444dd"}}>
@@ -163,7 +167,9 @@ export default function Profile({user}) {
                         </Col>
                     </Row>
                 </Col>
-            </Row> : <></>  }
+            </Row> 
+            </UserContext.Provider>
+            : <></>  }
         </>
                         
         )
@@ -178,3 +184,4 @@ export async function getServerSideProps(context) {
         },
     };
 }
+
