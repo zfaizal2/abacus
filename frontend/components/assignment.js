@@ -4,6 +4,10 @@ import { UserContext } from "../pages/profile.js"
 
 export default function Assignment({assignmentsData, termID, categoryID,classID}) {
     const [assnForm, setAssnForm] = useState(false)
+    const [assnScore, setAssnScore] = useState(0)
+    const [assnTotal, setAssnTotal] = useState(100)
+    const [assnName, setAssnName] = useState("")
+    const [data, setData] = useState(assignmentsData)
     var userID = React.useContext(UserContext)
 
     const handleAssignmentSubmit = (e) => {
@@ -14,9 +18,9 @@ export default function Assignment({assignmentsData, termID, categoryID,classID}
             "termID":termID,
             "classID": classID,
             "categoryID":categoryID,
-            "assignmentName":"yoo",
-            "score":0,
-            "total":100
+            "assignmentName":assnName,
+            "score":assnScore,
+            "total":assnTotal
         }
         
         var requestOptions = {
@@ -25,15 +29,11 @@ export default function Assignment({assignmentsData, termID, categoryID,classID}
             body: JSON.stringify(msg),
             redirect: 'follow'
           };
-          console.log(requestOptions.body)
         fetch("http://localhost:5000/assignments", requestOptions)
         .then(response => response.text())
         .then(
             result => {
-                 //setTerms((JSON.parse(result))["message"])
-              //   
-                console.log((JSON.parse(result)))
-                //setTerms((JSON.parse(result)))
+                setData(JSON.parse(result)["assignments"])
             }
           )
         .catch(error => console.log('error', error))      
@@ -43,8 +43,8 @@ export default function Assignment({assignmentsData, termID, categoryID,classID}
 
     return (
         <div>
-        {assignmentsData ?
-            assignmentsData.map(assignment =>
+        {data ?
+            data.map(assignment =>
                 <Row style={{width:"100%"}}>
                     <Col>
                         {assignment["assignment"]}
@@ -58,9 +58,9 @@ export default function Assignment({assignmentsData, termID, categoryID,classID}
         }
         {assnForm ?
             <div>  
-                <input type="text" name="name" placeholder="assignment name"/>
-                <input type="number" name="score" placeholder="score"/>
-                <input type="number" name="total" placeholder="total"/>
+                <input type="text" name="name" placeholder="assignment name" onChange={data => {setAssnName(data.target.value)}}/>
+                <input type="number" name="score" placeholder="score" onChange={data => setAssnScore(data.target.value)}/>
+                <input type="number" name="total" placeholder="total" onChange={data => setAssnTotal(data.target.value)}/>
                 <input type="submit" value="Submit" onClick={e => handleAssignmentSubmit(e)} />
             </div>  :
             <Row onClick={e => setAssnForm(true)}>+ new assignment</Row>

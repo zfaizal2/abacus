@@ -42,7 +42,7 @@ module.exports = function(router) {
         assns.push(newAssn);
         userObj.save();
         console.log(catObj);
-        res.status(200).send(userObj);
+        res.status(200).send(catObj);
     });
     return router;  
 }
