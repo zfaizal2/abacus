@@ -67,7 +67,7 @@ export default function TermsList({userID}) {
             <div> Add a term to get started!  </div>}
             </Row>
             <Row>
-                <TermData termData={term}></TermData>
+                <TermData termID={termID} termData={term}></TermData>
             </Row>
         </>
     )

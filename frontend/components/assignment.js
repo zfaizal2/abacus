@@ -43,7 +43,7 @@ export default function Assignment({assignmentsData, termID, categoryID,classID}
 
     return (
         <div>
-        {data ?
+        {data.length > 0 ?
             data.map(assignment =>
                 <Row style={{width:"100%"}}>
                     <Col>
