@@ -7,7 +7,7 @@ module.exports =  function(router) {
     // sample /courses POST 
     // {
     //     "userID":"google-oauth2|105237502290369756356",
-    //     "term":"SPRING2021",
+    //     "termID":"XXXXXXXXX",
     //     "course":"CS221",
     //     "hours":3,
     // }
@@ -23,7 +23,9 @@ module.exports =  function(router) {
         var userObj = await User.findById(userID);
         userObj.terms.id(termID).classes.push(newClass)
         userObj.save()
-        res.send(200)
+        var termData = userObj.terms.id(termID)
+        console.log(termData)
+        res.status(200).send(termData)
     
     })
   return router;  

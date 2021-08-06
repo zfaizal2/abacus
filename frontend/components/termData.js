@@ -52,6 +52,7 @@ export default function TermData({termID, termData}) {
         setCatForm(false)
     }
 
+    
 
 
 
@@ -94,7 +95,7 @@ export default function TermData({termID, termData}) {
                             <input type="number" name="weight" placeholder="percent" onChange={data => setCatWeight(data.target.value)}/>
                             <input type="submit" value="Submit" onClick={e => handleCategorySubmit(e)} />
                         </div>
-                        : <div onClick={e => setCatForm(true)}> + new category </div>
+                        : <button onClick={e => setCatForm(true)}> + new category </button>
                     }
                 </div> : <></> }
         </>

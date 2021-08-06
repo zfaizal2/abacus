@@ -10,6 +10,9 @@ export default function TermsList({userID}) {
     const [termData, setTermData] = useState({})
     const [termID, setTermID] = React.useState('')
     const [term, setTerm] = React.useState({})
+    const [className, setClassName] = React.useState("")
+    const [hours, setHours] = React.useState(0)
+    const [classButton, setClassButton] = React.useState(false)
 
     var myHeaders = new Headers();
     var requestOptions = {
@@ -52,6 +55,40 @@ export default function TermsList({userID}) {
         }
     }, [curTerm])
 
+    const handleClassSubmit = (e) => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");     
+
+        var msg = {
+            "userID":userID,
+            "termID": termID,
+            "course": className, 
+            "hours": hours
+        }
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: JSON.stringify(msg),
+            redirect: 'follow'
+        };
+        
+        fetch("http://localhost:5000/courses", requestOptions)
+        .then(response => response.text())
+        .then(
+            result => {
+                // setCurCats(JSON.parse(result))
+                setTerm({
+                    termID: JSON.parse(result)["_id"],
+                    classes: JSON.parse(result)["classes"]
+                })
+            }
+          )
+        .catch(error => console.log('error', error))      
+
+        setClassButton(false)
+    }
+
 
     return (
         <>
@@ -65,6 +102,16 @@ export default function TermsList({userID}) {
                         </option>)}
                 </select>: 
             <div> Add a term to get started!  </div>}
+            </Row>
+            <Row>
+                {classButton ? 
+                    <div>
+                        <input type="text" name="class name" placeholder="class name" onChange={data => {setClassName(data.target.value)}}/>
+                        <input type="number" name="credit hours" placeholder="credit hours" onChange={data => {setHours(data.target.value)}}/>
+                        <input type="submit" value="Submit" onClick={e => handleClassSubmit(e)} />
+                    </div>
+                    : <button onClick={e => setClassButton(true)}>add class</button>
+                }
             </Row>
             <Row>
                 <TermData termID={termID} termData={term}></TermData>

@@ -34,7 +34,6 @@ module.exports = function(router) {
 
         cats.push(newCat);
         userObj.save();
-        console.log(cats);
         res.status(SUCCESS).send(classObj);
     });
     return router;  
