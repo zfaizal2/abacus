@@ -5,7 +5,7 @@ import styles from "./classes.module.css"
 import Assignment from "./assignment.js"
 import { UserProvider } from "../pages/api/utils/user";
 
-export default function TermData({termID, termData}) {
+export default function TermData({userID, termID, termData}) {
     const [curCats, setCurCats] = useState([])
     // const [assnForm, setAssnForm] = useState(false)
     const [catName, setCatName] = useState("")
@@ -27,7 +27,7 @@ export default function TermData({termID, termData}) {
         myHeaders.append("Content-Type", "application/json");
 
         var msg = {
-            "userID":"google-oauth2|105237502290369756356",
+            "userID":userID,
             "termID":termID,
             "classID": classID,
             "category":catName,

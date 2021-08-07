@@ -13,7 +13,7 @@ export default function TermsList({userID}) {
     const [className, setClassName] = React.useState("")
     const [hours, setHours] = React.useState(0)
     const [classButton, setClassButton] = React.useState(false)
-
+    const termURI = `http://localhost:5000/terms/${userID}`
     var myHeaders = new Headers();
     var requestOptions = {
         method: 'GET',
@@ -24,7 +24,8 @@ export default function TermsList({userID}) {
     //for terms list
     useEffect(() =>{
         // get Terms Data
-        fetch(`http://localhost:5000/terms/5fe81c875d2445229c78cd3d`, requestOptions)
+        console.log(`http://localhost:5000/terms/${userID}`)
+        fetch(termURI, requestOptions)
         .then(response => response.text())
         .then(
             result => {
@@ -114,7 +115,7 @@ export default function TermsList({userID}) {
                 }
             </Row>
             <Row>
-                <TermData termID={termID} termData={term}></TermData>
+                <TermData userID={userID} termID={termID} termData={term}></TermData>
             </Row>
         </>
     )

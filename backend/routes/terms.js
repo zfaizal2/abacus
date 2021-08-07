@@ -17,10 +17,10 @@ module.exports =  function(router) {
     addTermsRoute.post(async (req, res) => {
         //authentication for user
         var authKey = req.body["userID"];
-        var userFind = {userID:`${authKey}`};
+        var userID = {userID:`${authKey}`};
         var userTerm = req.body["term"];
         //find user
-        var userObj = await User.findOne(userFind);
+        var userObj = await User.findById(userID);
         //get list of terms
         var terms = userObj.terms;
         // console.log(userTerm)

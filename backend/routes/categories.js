@@ -25,8 +25,7 @@ module.exports = function(router) {
         var cat = req.body["category"];
         var weight = req.body["weight"];
 
-        var userFind = {userID:`${authKey}`};
-        var userObj = await User.findOne(userFind);
+        var userObj = await User.findById(authKey);
         var classObj = userObj.terms.id(termID).classes.id(classID)
         var cats = classObj.categories;
         
