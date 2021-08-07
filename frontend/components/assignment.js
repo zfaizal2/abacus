@@ -8,7 +8,26 @@ export default function Assignment({assignmentsData, termID, categoryID,classID}
     const [assnTotal, setAssnTotal] = useState(100)
     const [assnName, setAssnName] = useState("")
     const [data, setData] = useState(assignmentsData)
+    const [totalScore, setTotalScore] = useState(0)
     var userID = React.useContext(UserContext)
+
+
+    useEffect(() => {
+        var sumScore = 0
+        var totalScore = 0
+        for (let i = 0; i < data.length; i++) {
+            console.log(data[i]["givenScore"])
+            sumScore += data[i]["givenScore"]
+            console.log(data[i]["totalScore"])
+            totalScore += data[i]["totalScore"]
+        }
+        var total = (sumScore/totalScore)*100
+        console.log("wow", total)
+        if (total >= 0) {
+            setTotalScore([total])
+        }
+    },[])
+      
 
     const handleAssignmentSubmit = (e) => {
         var myHeaders = new Headers();
@@ -43,9 +62,12 @@ export default function Assignment({assignmentsData, termID, categoryID,classID}
 
     return (
         <div>
+            <Row style={{paddingLeft:"10px"}}>
+                {totalScore}
+            </Row>
         {data.length > 0 ?
             data.map(assignment =>
-                <Row style={{width:"100%"}}>
+                <Row style={{width:"100%"}} key={assignment._id}>
                     <Col>
                         {assignment["assignment"]}
                     </Col>

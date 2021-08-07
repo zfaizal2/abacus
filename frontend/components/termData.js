@@ -61,7 +61,7 @@ export default function TermData({termID, termData}) {
             <Col>
             {termData.classes ? 
                 termData.classes.map(classData =>
-                <div className={styles.classCard} onClick={e => {setCurCats(classData["categories"]); setClassID(classData._id); console.log(classData._id); setClassClick(true)}}>
+                <div className={styles.classCard} key={classData._id} onClick={e => {setCurCats(classData["categories"]); setClassID(classData._id); setClassClick(true)}}>
                     <div className={styles.className}>{JSON.stringify(classData["className"]).replace(/['"]+/g, '')}</div>
                 </div>) :
                 <div>No classes</div>
@@ -72,7 +72,7 @@ export default function TermData({termID, termData}) {
                     {curCats.length > 0 ?
                     curCats.map(categoryData =>
                         <Col>
-                            <div className={styles.categoryCard}>
+                            <div className={styles.categoryCard} key={categoryData._id}>
                                 <Row>
                                     <Col>
                                         <div className={styles.categoryText} >{JSON.stringify(categoryData["category"]).replace(/['"]+/g, '')}</div>

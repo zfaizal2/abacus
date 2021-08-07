@@ -72,7 +72,7 @@ export default function TermsList({userID}) {
             body: JSON.stringify(msg),
             redirect: 'follow'
         };
-        
+
         fetch("http://localhost:5000/courses", requestOptions)
         .then(response => response.text())
         .then(
@@ -95,7 +95,7 @@ export default function TermsList({userID}) {
             <Row>
             {terms.length >= 1 ?
                 <select className={styles.customSelect} name="terms" id="term-select" onChange={e => {setCurTerm(e.currentTarget.value); setCurCats()}}>
-                
+                    <option></option>
                     {terms.map(term =>
                         <option key={term._id} value={JSON.stringify(term["termName"])}  >
                             {JSON.stringify(term["termName"]).toLowerCase().replace(/['"]+/g, '')}
