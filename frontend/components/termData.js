@@ -13,14 +13,36 @@ export default function TermData({userID, termID, termData}) {
     const [classID, setClassID] = useState("")
     const [catForm, setCatForm] = useState(false)
     const [classClick, setClassClick] = useState(false)
-    // const [data, setData] = useState(termData)
-    
-
+    // const [grade, setGrade] = useState(0)
+    const [totalData, setTotalData] = useState({})
+    const [totalGrade, setTotalGrade] = useState(0)
 
     useEffect(() => {
         setCurCats([])
         setClassClick(false)
     }, [termData])
+
+    useEffect(() => {
+        setTotalGrade(0)
+        var grade = 0
+        for (let i = 0; i < curCats.length; i++) {
+            if (curCats[i]["assignments"]) {
+                var cat = curCats[i]
+                var assns = curCats[i]["assignments"]
+                var sumScore = 0
+                var totalScore = 0
+                for (let j = 0; j < assns.length; j++) {
+                    sumScore += assns[j]["givenScore"]
+                    totalScore += assns[j]["totalScore"]
+                }
+                var total = (sumScore/totalScore)*100
+                if (total >= 0 ) {
+                    grade += (total*(cat["pctWeight"]/100) )
+                }
+            }
+        }
+        setTotalGrade(grade) 
+    }, [curCats])
 
     const handleCategorySubmit = (e) => {
         var myHeaders = new Headers();
@@ -67,12 +89,16 @@ export default function TermData({userID, termID, termData}) {
                 <div>No classes</div>
             }
             </Col>
+
             {classClick ?
+                <Col>
+                <Row>current grade {totalGrade}</Row>
                 <div>
                     {curCats.length > 0 ?
                     curCats.map(categoryData =>
-                        <Col>
+                        
                             <div className={styles.categoryCard} key={categoryData._id}>
+                                
                                 <Row>
                                     <Col>
                                         <div className={styles.categoryText} >{JSON.stringify(categoryData["category"]).replace(/['"]+/g, '')}</div>
@@ -82,11 +108,11 @@ export default function TermData({userID, termID, termData}) {
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Assignment assignmentsData={categoryData["assignments"]} termID={termData.termID} categoryID={categoryData._id} classID={classID}></Assignment>
+                                    <Assignment assignmentsData={categoryData["assignments"]} termID={termData.termID} categoryID={categoryData._id} classID={classID} ></Assignment>
 
                                 </Row>
                             </div>
-                        </Col>
+                        
                     ) :
                     <div>add categories to get started</div>}
                     {catForm ?
@@ -97,7 +123,8 @@ export default function TermData({userID, termID, termData}) {
                         </div>
                         : <button onClick={e => setCatForm(true)}> + new category </button>
                     }
-                </div> : <></> }
+                </div> </Col>: <></> }
+                
         </>
     )
 }

@@ -29,15 +29,13 @@ export default function TermsList({userID}) {
         .then(response => response.text())
         .then(
             result => {
-                // console.log(userID)
-                // console.log(result)
+
                 var res = JSON.parse(result)
-                // console.log(res)
                 setTerms(res["message"])
             }
             )
         .catch(error => console.log('error', error));
-    },[])
+    },[userID])
 
     useEffect(() =>{
 
@@ -45,7 +43,6 @@ export default function TermsList({userID}) {
         for (var i = 0; i < terms.length; i++) {
             if (terms[i]["termName"] == thisTerm) {
                 setTermData(terms[i]["classes"]);
-                // console.log(terms[i]._id)
                 setTermID(terms[i]._id)
                 setTerm({
                     termID: terms[i]._id,

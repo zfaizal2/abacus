@@ -2,31 +2,30 @@ import { Col, Row } from "antd";
 import React, {useState, useEffect} from "react";
 import { UserContext } from "../pages/profile.js"
 
-export default function Assignment({assignmentsData, termID, categoryID,classID}) {
+export default function Assignment({assignmentsData, termID, categoryID, classID}) {
     const [assnForm, setAssnForm] = useState(false)
     const [assnScore, setAssnScore] = useState(0)
     const [assnTotal, setAssnTotal] = useState(100)
     const [assnName, setAssnName] = useState("")
     const [data, setData] = useState(assignmentsData)
     const [totalScore, setTotalScore] = useState(0)
+    
     var userID = React.useContext(UserContext)
 
 
     useEffect(() => {
+        // console.log(grade)
         var sumScore = 0
         var totalScore = 0
         for (let i = 0; i < data.length; i++) {
-            console.log(data[i]["givenScore"])
             sumScore += data[i]["givenScore"]
-            console.log(data[i]["totalScore"])
             totalScore += data[i]["totalScore"]
         }
         var total = (sumScore/totalScore)*100
-        console.log("wow", total)
         if (total >= 0) {
             setTotalScore([total])
         }
-    },[])
+    }, [data])
       
 
     const handleAssignmentSubmit = (e) => {
