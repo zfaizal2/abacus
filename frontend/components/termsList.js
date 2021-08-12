@@ -7,8 +7,6 @@ import styles from './termsList.module.css'
 export default function TermsList({userID}) {
     const [terms, setTerms] = useState([]);
     const [curTerm, setCurTerm] = useState("");
-    const [termData, setTermData] = useState({})
-    const [termID, setTermID] = React.useState('')
     const [term, setTerm] = React.useState({})
     const [className, setClassName] = React.useState("")
     const [hours, setHours] = React.useState(0)
@@ -27,7 +25,6 @@ export default function TermsList({userID}) {
     //for terms list
     useEffect(() =>{
         // get Terms Data
-        console.log(termURI)
         fetch(termURI, requestOptions)
         .then(response => response.text())
         .then(
@@ -42,11 +39,9 @@ export default function TermsList({userID}) {
 
     useEffect(() =>{
 
-        var thisTerm = curTerm.slice(1, -1)
+        //var thisTerm = curTerm.slice(1, -1)
         for (var i = 0; i < terms.length; i++) {
-            if (terms[i]["termName"] == thisTerm) {
-                setTermData(terms[i]["classes"]);
-                setTermID(terms[i]._id)
+            if (terms[i]._id == curTerm) {
                 setTerm({
                     termID: terms[i]._id,
                     classes: terms[i]["classes"]
@@ -62,7 +57,7 @@ export default function TermsList({userID}) {
 
         var msg = {
             "userID":userID,
-            "termID": termID,
+            "termID": curTerm,
             "course": className, 
             "hours": hours
         }
@@ -134,7 +129,7 @@ export default function TermsList({userID}) {
                 <select className={styles.customSelect} name="terms" id="term-select" onChange={e => {setCurTerm(e.currentTarget.value)}}>
                     <option>select term</option>
                     {terms.map(term =>
-                        <option key={term._id} value={JSON.stringify(term["termName"])}  >
+                        <option key={term._id} value={term._id}  >
                             {JSON.stringify(term["termName"]).toLowerCase().replace(/['"]+/g, '')}
                         </option>)}
                 </select>: 
@@ -147,7 +142,7 @@ export default function TermsList({userID}) {
                 : <button onClick={e => setTermsButton(true)}>add term</button>
             }
             </Row>
-            {termID != '' ?
+            {curTerm != "select term" ?
                 <>
                     <Row>
                         {classButton ? 
@@ -160,7 +155,7 @@ export default function TermsList({userID}) {
                         }
                     </Row>
                     <Row>
-                        <TermData userID={userID} termID={termID} termData={term}></TermData>
+                        <TermData userID={userID} termID={curTerm} termData={term}></TermData>
                     </Row> 
                 </> : <></>
             }
