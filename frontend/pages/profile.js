@@ -72,6 +72,7 @@ export default function Profile({user}) {
                         </Card>
                     </Col>
                     <Col>
+                        
                         <TermsList userID={userID}></TermsList>
                     </Col>
                 </Row> 

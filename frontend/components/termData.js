@@ -7,14 +7,11 @@ import { UserProvider } from "../pages/api/utils/user";
 
 export default function TermData({userID, termID, termData}) {
     const [curCats, setCurCats] = useState([])
-    // const [assnForm, setAssnForm] = useState(false)
     const [catName, setCatName] = useState("")
     const [catWeight, setCatWeight] = useState(0)
     const [classID, setClassID] = useState("")
     const [catForm, setCatForm] = useState(false)
     const [classClick, setClassClick] = useState(false)
-    // const [grade, setGrade] = useState(0)
-    const [totalData, setTotalData] = useState({})
     const [totalGrade, setTotalGrade] = useState(0)
 
     useEffect(() => {
@@ -81,13 +78,14 @@ export default function TermData({userID, termID, termData}) {
     return (
         <>
             <Col>
-            {termData.classes ? 
-                termData.classes.map(classData =>
-                <div className={styles.classCard} key={classData._id} onClick={e => {setCurCats(classData["categories"]); setClassID(classData._id); setClassClick(true)}}>
-                    <div className={styles.className}>{JSON.stringify(classData["className"]).replace(/['"]+/g, '')}</div>
-                </div>) :
-                <div>No classes</div>
-            }
+                {termData.classes  ? 
+                    termData.classes.map(classData =>
+                    <div className={styles.classCard} key={classData._id} onClick={e => {setCurCats(classData["categories"]); setClassID(classData._id); setClassClick(true)}}>
+                        <div className={styles.className}>{JSON.stringify(classData["className"]).replace(/['"]+/g, '')}</div>
+                    </div>) :
+                    <div>No classes</div>
+                }
+
             </Col>
 
             {classClick ?
