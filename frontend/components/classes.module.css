@@ -44,3 +44,17 @@
     margin-left: auto;
     display: flex;
 }
+
+.button {
+    padding: 0;
+    border: none;
+    background: none;
+    color: black;
+    font-weight: bold;
+}
+
+.activeClass {
+    justify-content: center;
+    align-items: center;
+    margin-top: 25%;
+}

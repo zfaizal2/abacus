@@ -80,9 +80,15 @@ export default function TermData({userID, termID, termData}) {
             <Col>
                 {termData.classes  ? 
                     termData.classes.map(classData =>
-                    <div className={styles.classCard} key={classData._id} onClick={e => {setCurCats(classData["categories"]); setClassID(classData._id); setClassClick(true)}}>
-                        <div className={styles.className}>{JSON.stringify(classData["className"]).replace(/['"]+/g, '')}</div>
-                    </div>) :
+                    <Row>
+                        <Col className={styles.classCard} key={classData._id} onClick={e => {setCurCats(classData["categories"]); setClassID(classData._id); setClassClick(true)}}>
+                            <div className={styles.className}>{JSON.stringify(classData["className"]).replace(/['"]+/g, '')}</div>
+                        </Col>
+                        {classID==classData._id && classClick ? 
+                        <Col className={styles.activeClass}>---</Col> :
+                        <></>}
+                    </Row>
+                    ) :
                     <div>No classes</div>
                 }
 
@@ -119,7 +125,7 @@ export default function TermData({userID, termID, termData}) {
                             <input type="number" name="weight" placeholder="percent" onChange={data => setCatWeight(data.target.value)}/>
                             <input type="submit" value="Submit" onClick={e => handleCategorySubmit(e)} />
                         </div>
-                        : <button onClick={e => setCatForm(true)}> + new category </button>
+                        : <button className={styles.button} onClick={e => setCatForm(true)}> + new category </button>
                     }
                 </div> </Col>: <></> }
                 

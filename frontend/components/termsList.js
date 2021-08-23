@@ -137,9 +137,11 @@ export default function TermsList({userID}) {
             {termsButton ? 
                 <div>
                     <input type="text" name="term name" placeholder="term name" onChange={data => {setTermName(data.target.value)}}/>
-                    <input type="submit" value="Submit" onClick={e => handleTermSubmit(e)} />
+                    <input className={styles.termsButton} type="submit" value="Submit" onClick={e => handleTermSubmit(e)} />
                 </div>
-                : <button onClick={e => setTermsButton(true)}>add term</button>
+                : <button className={styles.termsButton} onClick={e => setTermsButton(true)}>
+                    <div className={styles.termsText}>+ term</div>
+                </button>
             }
             </Row>
             {curTerm != "select term" ?
@@ -149,9 +151,11 @@ export default function TermsList({userID}) {
                             <div>
                                 <input type="text" name="class name" placeholder="class name" onChange={data => {setClassName(data.target.value)}}/>
                                 <input type="number" name="credit hours" placeholder="credit hours" onChange={data => {setHours(data.target.value)}}/>
-                                <input type="submit" value="Submit" onClick={e => handleClassSubmit(e)} />
+                                <input className={styles.termsButton} type="submit" value="Submit" onClick={e => handleClassSubmit(e)} />
                             </div>
-                            : <button onClick={e => setClassButton(true)}>add class</button>
+                            : <button className={styles.termsButton} onClick={e => setClassButton(true)}>
+                                <div className={styles.termsText}>+ class</div>
+                            </button>
                         }
                     </Row>
                     <Row>

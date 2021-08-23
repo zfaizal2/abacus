@@ -2,3 +2,23 @@
     margin: 1rem;
 }
 
+.termsButton {
+    height: 1.5rem;
+    width: 4.5rem;
+    background-color: white;
+    border-color: #0275D8;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.termsText {
+    color: #0275D8;
+    font-family: 'Lato';
+    font-weight: 800;
+    margin-left: auto;
+    align-items: center;
+    display:flex;
+    justify-content: center;
+    height: 100%;
+}

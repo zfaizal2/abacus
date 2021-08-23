@@ -24,6 +24,8 @@
     border-radius: 10px;
     align-items: center;
     justify-content: center;
+    border-width: none !important;
+    border-color: #0275D8;
 }
 
 .signoutText {
