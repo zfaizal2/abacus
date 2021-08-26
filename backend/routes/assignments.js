@@ -48,6 +48,7 @@ module.exports = function(router) {
 
     //update course
     assnUpdate.put(async (req, res) => {
+        console.log("hit")
        var assnID = req.params.id;
        var userID = req.body["userID"];
        var score = req.body["score"];
@@ -63,7 +64,7 @@ module.exports = function(router) {
        assnObj.givenScore = score;
        assnObj.totalScore = total;
        userObj.save();
-       res.status(200).send(assnObj);
+       res.status(200).send(userObj.terms.id(termID).classes.id(classID).categories.id(catId));
     })
     return router;  
 }
