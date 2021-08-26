@@ -2,7 +2,7 @@ import { Col, Row } from "antd";
 import React, {useState, useEffect} from "react";
 import { UserContext } from "../pages/profile.js"
 
-export default function Assignment({assignmentsData, termID, categoryID, classID}) {
+export default function Assignment({userID, assignmentsData, termID, categoryID, classID}) {
     const [assnForm, setAssnForm] = useState(false)
     const [assnScore, setAssnScore] = useState(0)
     const [assnTotal, setAssnTotal] = useState(100)
@@ -32,7 +32,7 @@ export default function Assignment({assignmentsData, termID, categoryID, classID
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         var msg = {
-            "userID":"google-oauth2|105237502290369756356",
+            "userID":userID,
             "termID":termID,
             "classID": classID,
             "categoryID":categoryID,

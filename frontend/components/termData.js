@@ -112,7 +112,7 @@ export default function TermData({userID, termID, termData}) {
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Assignment assignmentsData={categoryData["assignments"]} termID={termData.termID} categoryID={categoryData._id} classID={classID} ></Assignment>
+                                    <Assignment userID={userID} assignmentsData={categoryData["assignments"]} termID={termData.termID} categoryID={categoryData._id} classID={classID} ></Assignment>
 
                                 </Row>
                             </div>

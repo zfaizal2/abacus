@@ -21,8 +21,10 @@ module.exports = function(router) {
     }
     */
     
+
+    //add course
     assnRoute.post(async (req, res) => {
-        var authKey = req.body["userID"];
+        var userID = req.body["userID"];
         var termID = req.body["termID"];
         var classID = req.body["classID"];
         var catId = req.body["categoryID"];
@@ -31,8 +33,7 @@ module.exports = function(router) {
         var total = req.body["total"];
 
 
-        var userFind = {userID:`${authKey}`};
-        var userObj = await User.findOne(userFind);
+        var userObj = await User.findById(userID);
         var catObj = userObj.terms.id(termID).classes.id(classID).categories.id(catId);
 
         var assns = catObj.assignments;
@@ -44,26 +45,26 @@ module.exports = function(router) {
         console.log(catObj);
         res.status(200).send(catObj);
     });
+
+    //update course
+    assnUpdate.put(async (req, res) => {
+       var assnID = req.params.id;
+       var userID = req.body["userID"];
+       var score = req.body["score"];
+       var termID = req.body["termID"];
+       var classID = req.body["classID"];
+       var catId = req.body["categoryID"];
+       var score = req.body["score"];
+       var total = req.body["total"];
+
+       var userObj = await User.findById(userID);
+       var assnObj = userObj.terms.id(termID).classes.id(classID).categories.id(catId).assignments.id(assnID);
+       console.log(assnObj)
+       assnObj.givenScore = score;
+       assnObj.totalScore = total;
+       userObj.save();
+       res.status(200).send(assnObj);
+    })
     return router;  
 }
 
-/* sample request
-{ 
-    "userID":"google-oauth2|105237502290369756356",
-    "courses": [
-        {
-            "courseName":"CS225",
-            "category":"Exams",
-            "assignment":"Exam 1",
-            "score":32,
-            "totalScore":100
-        },
-        {
-            "courseName":"CS225",
-            "category":"Exams",
-            "assignment":"Exam 2",
-            "score":32,
-            "totalScore":100
-        },
-    ]
-}*/
