@@ -15,7 +15,6 @@ export default function Assignment({userID, assignmentsData, termID, categoryID,
 
 
     useEffect(() => {
-        // console.log(grade)
         var sumScore = 0
         var totalScore = 0
         for (let i = 0; i < data.length; i++) {
@@ -71,7 +70,7 @@ export default function Assignment({userID, assignmentsData, termID, categoryID,
             "score":assnScore,
             "total":assnTotal
         }
-        
+        console.log(msg)
         var requestOptions = {
             method: 'PUT',
             headers: myHeaders,
@@ -106,7 +105,7 @@ export default function Assignment({userID, assignmentsData, termID, categoryID,
                         <Col style={{paddingLeft:"10px"}}>
                             {(assignment["givenScore"] / assignment["totalScore"])*100}%
                         </Col>
-                    </Row>:
+                    </Row> :
                     <div>  
                         <input type="text" name="name" defaultValue={assignment["assignment"]} onChange={data => {setAssnName(data.target.value)}}/>
                         <input type="number" name="score" defaultValue={assignment["givenScore"]} onChange={data => setAssnScore(data.target.value)}/>

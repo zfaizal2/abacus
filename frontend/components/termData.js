@@ -13,6 +13,7 @@ export default function TermData({userID, termID, termData}) {
     const [catForm, setCatForm] = useState(false)
     const [classClick, setClassClick] = useState(false)
     const [totalGrade, setTotalGrade] = useState(0)
+    const [catEdit, setCatEdit] = useState("")
 
     useEffect(() => {
         setCurCats([])
@@ -71,17 +72,45 @@ export default function TermData({userID, termID, termData}) {
         setCatForm(false)
     }
 
+    const handleCategoryEdit = (e) => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        var msg = {
+            "userID":userID,
+            "termID":termID,
+            "classID": classID,
+            "category":catName,
+            "weight":catWeight,
+        }
+        console.log(msg)
+        var requestOptions = {
+            method: 'PUT',
+            headers: myHeaders,
+            body: JSON.stringify(msg),
+            redirect: 'follow'
+          };
+
+          fetch(`http://localhost:5000/categories/${catEdit}`, requestOptions)
+          .then(response => response.text())
+          .then(
+              result => {
+                  setCurCats(JSON.parse(result)["categories"])
+                  console.log(curCats)
+              }
+            )
+          .catch(error => console.log('error', error))      
+        setCatEdit("")
+    }
+
     
-
-
 
     return (
         <>
             <Col>
                 {termData.classes  ? 
                     termData.classes.map(classData =>
-                    <Row>
-                        <Col className={styles.classCard} key={classData._id} onClick={e => {setCurCats(classData["categories"]); setClassID(classData._id); setClassClick(true)}}>
+                    <Row key={classData._id}>
+                        <Col className={styles.classCard}  onClick={e => {setCurCats(classData["categories"]); setClassID(classData._id); setClassClick(true)}}>
                             <div className={styles.className}>{JSON.stringify(classData["className"]).replace(/['"]+/g, '')}</div>
                         </Col>
                         {classID==classData._id && classClick ? 
@@ -93,24 +122,28 @@ export default function TermData({userID, termID, termData}) {
                 }
 
             </Col>
-
             {classClick ?
                 <Col>
                 <Row>current grade {totalGrade}</Row>
                 <div>
                     {curCats.length > 0 ?
-                    curCats.map(categoryData =>
-                        
-                            <div className={styles.categoryCard} key={categoryData._id}>
-                                
-                                <Row>
+                        curCats.map(categoryData =>
+                            <div className={styles.categoryCard} key={categoryData._id}> 
+                                {catEdit != categoryData._id ? 
+                                <Row onClick={e => setCatEdit(categoryData._id)}>
                                     <Col>
                                         <div className={styles.categoryText} >{JSON.stringify(categoryData["category"]).replace(/['"]+/g, '')}</div>
                                     </Col>
                                     <Col>
                                         <div className={styles.pctText}>{JSON.stringify(categoryData["pctWeight"]).replace(/['"]+/g, '')}</div>
                                     </Col>
-                                </Row>
+                                </Row> :
+                                <div>  
+                                    <input type="text" name="name" defaultValue={categoryData["category"]} onChange={data => {setCatName(data.target.value); console.log(categoryData["category"], console.log(catName))}}/>
+                                    <input type="number" name="weight" defaultValue={categoryData["pctWeight"]} onChange={data => setCatWeight(data.target.value)}/>
+                                    <input type="submit" value="Submit" onClick={e => handleCategoryEdit(e)} />
+                                </div>
+                                }
                                 <Row>
                                     <Assignment userID={userID} assignmentsData={categoryData["assignments"]} termID={termData.termID} categoryID={categoryData._id} classID={classID} ></Assignment>
 

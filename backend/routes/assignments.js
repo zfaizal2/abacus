@@ -48,19 +48,20 @@ module.exports = function(router) {
 
     //update course
     assnUpdate.put(async (req, res) => {
-        console.log("hit")
+
        var assnID = req.params.id;
        var userID = req.body["userID"];
        var score = req.body["score"];
        var termID = req.body["termID"];
        var classID = req.body["classID"];
        var catId = req.body["categoryID"];
+       var name = req.body["assignmentName"];
        var score = req.body["score"];
        var total = req.body["total"];
 
        var userObj = await User.findById(userID);
        var assnObj = userObj.terms.id(termID).classes.id(classID).categories.id(catId).assignments.id(assnID);
-       console.log(assnObj)
+       assnObj.assignmentName = name;
        assnObj.givenScore = score;
        assnObj.totalScore = total;
        userObj.save();
